@@ -1,8 +1,3 @@
----
-layout: default
----
-[back](../sc2ai){: .btn.btn-default}
-
 # Zero-Player Games
 
 [Paper link](http://www.jesperjuul.net/text/zeroplayergames/){: target="_blank"}

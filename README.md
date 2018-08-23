@@ -2,7 +2,7 @@
 
 ## The list of Projects
 - Hankki : The Dining Hosting Platform
-- Cifar10 Classifier less than 10 layers
+- CIFAR10 Classifier less than 10 layers
 - Object Detector by Background Subtraction
 - StarCraft II AI
 - MNIST classifier with only 10K training data

@@ -1,8 +1,3 @@
----
-layout: default
----
-[back](../sc2ai){: .btn.btn-default}
-
 # Benchmarking Deep Reinforcement Learning for Continuous Control
 
 [Paper link](https://arxiv.org/pdf/1604.06778){: target="_blank"}

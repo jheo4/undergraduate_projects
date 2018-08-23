@@ -1,8 +1,3 @@
----
-layout: default
----
-[back](../sc2ai){: .btn.btn-default}
-
 # CMake Support in Visual Studio 2017
 
 [MSDN offcial blog link](https://blogs.msdn.microsoft.com/vcblog/2016/11/16/cmake-support-in-visual-studio-the-visual-studio-2017-rc-update/){: target="_blank"}

@@ -4,4 +4,4 @@ These are the source codes of 2D shooting game. Since it is developed in Windows
 
 
 ## A Playing Video
-[![2D_shooting](http://img.youtube.com/vi/zZdNxshjwik/0.jpg)](https://youtu.be/zZdNxshjwik){: target="_blank"}
+[![2D_shooting](http://img.youtube.com/vi/zZdNxshjwik/0.jpg)](https://youtu.be/zZdNxshjwik)

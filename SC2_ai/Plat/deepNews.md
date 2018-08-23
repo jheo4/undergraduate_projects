@@ -1,8 +1,3 @@
----
-layout: default
----
-[back](../sc2ai){: .btn.btn-default}
-
 # DeepMind and Blizzard open StarCraft II as an AI research environment
 
 [News link](https://deepmind.com/blog/deepmind-and-blizzard-open-starcraft-ii-ai-research-environment/){: target="_blank"}

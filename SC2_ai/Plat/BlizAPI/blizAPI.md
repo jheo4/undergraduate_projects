@@ -1,8 +1,3 @@
----
-layout: default
----
-[back](../../sc2ai){: .btn.btn-default}
-
 # StarCraft 2 API
 
 [SC2 API Github link](https://github.com/Blizzard/s2client-api){: target="_blank"}

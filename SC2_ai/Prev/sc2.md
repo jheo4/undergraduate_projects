@@ -1,8 +1,3 @@
----
-layout: default
----
-[back](../sc2ai){: .btn.btn-default}
-
 # StarCraft II: A New Challenge for Reinforcement Learning
 
 [Paper link](https://deepmind.com/documents/110/sc2le.pdf){: target="_blank"}

@@ -1,8 +1,3 @@
----
-layout: default
----
-[back](./sc2APItemplate){: .btn.btn-default}
-
 # Basic Scripted AI(Zealot Rush Bot)
 
 [Blizzard SC2 API Tutorial Link](https://github.com/Blizzard/s2client-api/blob/master/docs/tutorial1.md){: target="_blank"}

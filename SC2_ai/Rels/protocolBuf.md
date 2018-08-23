@@ -1,8 +1,3 @@
----
-layout: default
----
-[back](../sc2ai){: .btn.btn-default}
-
 # Google Protocol Buffer
 
 [Protocol buffer link](https://developers.google.com/protocol-buffers/){: target="_blank"}

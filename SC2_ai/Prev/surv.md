@@ -1,8 +1,3 @@
----
-layout: default
----
-[back](../sc2ai){: .btn.btn-default}
-
 # A Survey of Real-Time Strategy Game AI Research and Competition in StarCraft
 
 [Paper link](http://ieeexplore.ieee.org/document/6637024/){: target="_blank"}
