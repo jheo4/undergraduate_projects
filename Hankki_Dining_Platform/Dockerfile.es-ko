@@ -1,0 +1,61 @@
+FROM elasticsearch:5.1.1
+MAINTAINER Hunchul Park "huntrax11@ajou.ac.kr"
+USER root
+RUN \
+    apt-get update &&\
+    apt-get install -y \
+        build-essential \
+        automake
+RUN apt-get install -y -t jessie-backports openjdk-8-jdk-headless
+
+ENV MECAB_KO_VER 0.996-ko-0.9.2
+ENV MECAB_KO_DIC_VER 2.0.3-20170922
+ENV MECAB_JAVA_VER 0.996
+ENV ES_MECAB_KO_VER 5.1.1.0
+
+# Install mecab-ko
+RUN \
+  cd /opt &&\
+  wget https://bitbucket.org/eunjeon/mecab-ko/downloads/mecab-${MECAB_KO_VER}.tar.gz &&\
+  tar xvf mecab-${MECAB_KO_VER}.tar.gz &&\
+  cd /opt/mecab-${MECAB_KO_VER} &&\
+  ./configure &&\
+  make &&\
+  make check &&\
+  make install &&\
+  ldconfig &&\
+  rm -rf /opt/mecab-${MECAB_KO_VER}*
+
+# Install mecab-ko-dic
+RUN \
+  cd /opt &&\
+  wget https://bitbucket.org/eunjeon/mecab-ko-dic/downloads/mecab-ko-dic-${MECAB_KO_DIC_VER}.tar.gz &&\
+  tar xvf mecab-ko-dic-${MECAB_KO_DIC_VER}.tar.gz &&\
+  cd /opt/mecab-ko-dic-${MECAB_KO_DIC_VER} &&\
+  ./autogen.sh &&\
+  ./configure &&\
+  make &&\
+  make install &&\
+  rm -rf /opt/mecab-ko-dic-${MECAB_KO_DIC_VER}*
+
+# Install mecab-java
+RUN \
+  cd /opt &&\
+  wget https://bitbucket.org/eunjeon/mecab-java/downloads/mecab-java-${MECAB_JAVA_VER}.tar.gz &&\
+  tar xvf mecab-java-${MECAB_JAVA_VER}.tar.gz &&\
+  cd /opt/mecab-java-${MECAB_JAVA_VER} &&\
+  sed -i 's|/home/parallels/Programs/jdk1.7.0_75/include|/usr/lib/jvm/java-8-openjdk-amd64/include|' Makefile &&\
+  make &&\
+  cp libMeCab.so /usr/local/lib &&\
+  rm -rf /opt/mecab-java-${MECAB_JAVA_VER}*
+
+RUN /usr/share/elasticsearch/bin/elasticsearch-plugin install https://bitbucket.org/eunjeon/mecab-ko-lucene-analyzer/downloads/elasticsearch-analysis-mecab-ko-${ES_MECAB_KO_VER}.zip
+RUN \
+  apt-get autoremove -y \
+    build-essential \
+    automake \
+    openjdk-8-jdk-headless
+
+ENV ES_JAVA_OPTS="-Des.security.manager.enabled=false -Djava.library.path=/usr/local/lib"
+
+USER elasticsearch

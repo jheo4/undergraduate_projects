@@ -1,0 +1,86 @@
+{% extends 'layout.html' %}
+{% block container %}
+<div class="ui container">
+  <script type="text/javascript">
+  $('body').ready(() => {
+    $('#input_images').on('change', (event) => {
+      multiple_preview(event, 'div.gallery');
+    });
+
+    $('#form').on('submit', () => {
+      images = $('#input_images')[0].files;
+      for(let i = 0; i < images.length; i++){
+        upload_file(images[i], (url, object_uuid) => {
+          $('#form input[name="image_uuids"][index="'+i+'"]').val(object_uuid);
+          var uuids = $.map($('#form input[name="image_uuids"]'), (input)=>{
+            var image_uuid = $(input).val();
+            if(image_uuid != ""){
+              return image_uuid;
+            }
+          });
+          if(uuids.length == images.length){
+            $.post("{{url_for('account.upload_host_documents')}}",
+              $('#form').serialize(), ()=>{
+              document.location="/";});
+          }
+        });
+      }
+      return false;
+    });
+  });
+  </script>
+
+  <h2>Be a Host of 한끼줍쇼!</h2>
+  <div class="ui one column relaxed grid">
+    <div class="column">
+      <form id="form" class="ui form" method="POST" action="{{ action_url }}"
+            enctype="multipart/form-data">
+        <div class="field">
+          <label>Bank</label>
+          <select size="5" id="banks" name="banks" class="ui fluid dropdown">
+            <option value="국민">국민은행</option>
+            <option value="기업">기업은행</option>
+            <option value="NH농협">NH농협은행</option>
+            <option value="신한">신한은행</option>
+            <option value="씨티">씨티은행</option>
+            <option value="외환">외환은행</option>
+            <option value="우리">우리은행</option>
+            <option value="우체국">우체국</option>
+            <option value="KEB하나">KEB하나은행</option>
+            <option value="대구">대구은행</option>
+            <option value="부산">부산은행</option>
+            <option value="SC제일" selected>SC제일은행</option>
+            <option value="신한금융투자">신한금융투자</option>
+            <option value="케이뱅크">케이뱅크</option>
+            <option value="카카오뱅크">카카오뱅크</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Account Numbers</label>
+          <input name="account_numbers" type="text" maxlength="20" placeholder="Input your account nuber with '-'"/>
+        </div>
+        <div class="field">
+          <label>Description</label>
+          <textarea name="description" rows="5" cols="100"></textarea>
+        </div>
+        <div class="field">
+          <div class="ui info message">
+            <div class="list">
+              <li>Upload evidential documents (신분증, 통장사본, 보건증, 사업자등록증, 요리사자격증)</li>
+            </div>
+          </div>
+          <label for="input_images" class="ui icon basic button">
+            <i class="file icon"></i>
+            Open File
+          </label>
+          <input type="file" multiple id="input_images" style="display:none;">
+          <div class="ui images small gallery"></div>
+        </div>
+        <button class="ui basic blue button" type="submit">
+          Request Host Authorization
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

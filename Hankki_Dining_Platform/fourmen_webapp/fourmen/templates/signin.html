@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+{% block container %}
+<div class="ui container">
+  <form class="ui form" method="POST">
+    <div class="field">
+      <label>ID</label>
+      <input name="username" type="text" required/>
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input name="password" type="password"/>
+    </div>
+    <button class="ui primary button" type="submit">Sign in</button>
+  </form>
+</div>
+{% endblock %}
+

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>한끼줍쇼</title>
+  <meta charset="utf-8">
+  <!-- VENDOR CSS -->
+  {% assets "css_all" %}
+    <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/jquery-ui.min.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/semantic.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/slick.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/slick-theme.min.css') }}">
+  {% endassets %}
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+
+  <!-- VENDOR JS -->
+  {% assets "vendor_js" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {% endassets %}
+</head>
+<body>
+<input id="path" type="hidden" value="{{ request.path }}">
+<div class="ui fixed menu">
+  <div class="ui fluid container">
+    <div class="item">
+      <a class="main-title" href="/">한끼줍쇼</a>
+    </div>
+    <div class="right menu">
+      {% if 'id' in session %}
+        {% if g.current_user.is_host %}
+          <a class="item" href="{{ url_for('meal.meal_form') }}">Host a Meal</a>
+          <a class="item" href="{{ url_for('account.list_meals') }}">Your listings</a>
+        {% else %}
+          <a class="item" href="{{ url_for('account.upload_host_documents') }}">Be a Host</a>
+        {% endif %}
+        {% if g.current_user.is_admin %}
+          <a class="item" href="{{ url_for('admin.list_applicants') }}">Authorize Hosts</a>
+        {% endif %}
+        <a class="item" href="{{ url_for('dining.list_dining') }}">Your Reservations</a>
+        <a class="item" href="{{ url_for('message.message_list') }}">Messages</a>
+        <div class="ui dropdown item">
+          <img class="ui avatar image" src="{{ g.current_user.profile_image_url }}">
+          <div class="menu">
+            <a class="item" href="{{ url_for('account.view_profile', user_id=session['id']) }}">View Profile</a>
+            <a class="item" href="{{ url_for('account.modification') }}">Edit Profile</a>
+            <a class="item" href="{{ url_for('account.list_reviews') }}">Reviews</a>
+            {% if g.current_user.is_admin %}
+            <a class="item" href="https://admin.iamport.kr/users/login" target="_blank">Transaction History(PG)</a>
+            {% endif %}
+            <a class="item" href="{{ url_for('account.signout') }}">Sign out</a>
+          </div>
+        </div>
+      {% else %}
+        <a class="item" href="{{ url_for('account.signin') }}">Sign in</a>
+        <a class="item" href="{{ url_for('account.signup') }}">Sign up</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<div class="ui fluid container">
+  <div class="ui main container">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="ui positive message transition">
+          <div class="">
+            {% for message in messages %}
+             {{ message }}
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    {% endwith %}
+  </div>
+  {% block container %}{% endblock %}
+</div>
+{% assets "common_js" %}
+  <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  <script type="text/javascript">
+    $('.ui.dropdown').dropdown();
+  </script>
+{% endassets %}
+</body>
+</html>

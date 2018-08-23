@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+{% block container %}
+<div class="ui container">
+  <div class="ui celled relaxed divided list">
+    <!--Iterative items...-->
+    <h1 class="ui header">Pending Host Documents</h1>
+    {%for application in applications %}
+    {% set user=application.user %}
+      {% if user.is_host==False %}
+        <div class="item">
+          <i class="large file middle aligned icon"></i>
+          <div class="content">
+            <a class="header" href="{{url_for('admin.confirm_applicants', application_id=application.id)}}">{{user.username}}</a>
+            <div class="date">Upload date : {{application.created_at}}</div>
+          </div>
+        </div>
+      {%endif%}
+    {% endfor %}
+</div>
+{% endblock %}

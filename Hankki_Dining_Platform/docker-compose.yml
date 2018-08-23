@@ -1,0 +1,70 @@
+version: '3.2'
+services:
+  webapp:
+    build: .
+    image: fourmen/webapp
+    container_name: dining-web
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - postgres
+      - minio
+    networks:
+      - dining-nw
+    environment:
+      POSTGRES_HOST: dining-db
+      POSTGRES_DB: dining
+      POSTGRES_USER: fourmen
+      POSTGRES_PASSWORD: fourmen
+      ELASTICSEARCH_HOST: dining-es:9200
+    volumes:
+      - ./conf/cert:/etc/ssl/nginx
+      - ./fourmen_webapp:/fourmen
+  postgres:
+    image: postgres:9.3
+    container_name: dining-db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=dining
+      - POSTGRES_USER=fourmen
+      - POSTGRES_PASSWORD=fourmen
+    networks:
+      - dining-nw
+  elasticsearch:
+    build:
+      context: .
+      dockerfile: Dockerfile.es-ko
+    image: fourmen/elasticsearch
+    container_name: dining-es
+    ports:
+      - "9200:9200"
+    networks:
+      - dining-nw
+  minio:
+    image: minio/minio:latest
+    container_name: dining-fs
+    environment:
+      - MINIO_ACCESS_KEY=BWC0AAJ01XPZHIR80EY6
+      - MINIO_SECRET_KEY=KAjBejHq0iJSjPfbucFVQdkIAmFnmmeZcjQx5HQF
+    command: server /export
+    networks:
+      - dining-nw
+  create_buckets:
+    image: minio/mc
+    container_name: minio-entry
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      sleep 5;
+      /usr/bin/mc config host add myminio http://dining-fs:9000 BWC0AAJ01XPZHIR80EY6 KAjBejHq0iJSjPfbucFVQdkIAmFnmmeZcjQx5HQF;
+      /usr/bin/mc rm -r --force myminio/fourmen;
+      /usr/bin/mc mb myminio/fourmen;
+      exit 0;
+      "
+    networks:
+      - dining-nw
+networks:
+  dining-nw:

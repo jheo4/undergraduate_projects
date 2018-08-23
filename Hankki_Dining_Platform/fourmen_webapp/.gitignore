@@ -1,0 +1,16 @@
+.pyc
+
+*.py[cod]
+__pycache_/
+dist/
+env/
+build/
+*.egg-info/
+.coverage
+
+# PyCharm
+.idea/
+
+# js/css cache
+fourmen/static/gen/
+fourmen/static/.webassets-cache

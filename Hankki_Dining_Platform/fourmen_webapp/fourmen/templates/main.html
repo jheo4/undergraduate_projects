@@ -1,0 +1,68 @@
+{% extends 'layout.html' %}
+{% from "macros.html" import meal_card%}
+{% block container %}
+  {% set bg_img = url_for("static", filename="img/meal_main.jpg") %}
+  <div class="ui container fluid" style="height: 400px; background: url('{{ bg_img }}')">
+  <div class="ui container">
+    <div class="ui header inverted" style="font-size: 3em; padding-top: 20vh;">Bon Appétit!</div>
+  </div>
+</div>
+<div class="ui container">
+  <div class="container">
+    <!-- START Dummy map for JS -->
+    <div id="map" style="display: none;"></div>
+    <!-- END Dummy map for JS -->
+    <div class="ui segment">
+      <h4 class="ui center aligned header">Write any keywords and choose your location & distance &#x1F37D;</h4>
+      <div class="ui clearing divider"></div>
+      <form class="ui form" id="search-form" method="GET">
+        <div class="fields">
+          <div id="search-body" class="ui icon input ten wide field">
+            <input id="keyword" name="keyword" class="prompt" type="text"
+                   placeholder="Search meals..." onkeypress="if(event.keyCode==13){ mealSearch();}">
+            <i class="search icon"></i>
+          </div>
+          <div id="distance-select" class="field">
+            <select class="ui search selection dropdown" id="distance" onchange="mealSearch()">
+              <option value="5km">5km</option>
+              <option value="15km" selected>15km</option>
+              <option value="30km">30km</option>
+              <option value="50km">50km</option>
+            </select>
+          </div>
+          <div id="search-body" class="field">
+            <div class="ui action input">
+              <input id="search-input" type="text" placeholder="enter a location">
+              <button id="search-loc" class="ui icon button">
+                <i class="compass outline icon"></i>
+              </button>
+            </div>
+            <input type="hidden" name="city" id="locality">
+            <input type="hidden" name="state" id="administrative_area_level_1">
+            <input type="hidden" name="country" id="country">
+            <input type="hidden" name="lat" id="lat">
+            <input type="hidden" name="lng" id="lng">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div id="meal_list" class="ui dividing">
+  </div>
+
+  <div class="ui dividing" style="margin-top:60px">
+    <h2 style="margin: 10px">Trending Meals</h2>
+    <div class="ui cards">
+      {% for meal in meals %}
+        {{ meal_card(meal) }}
+      {% endfor %}
+    </div>
+  </div>
+  {% assets "main_js" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj1i_H5y8QQYOwpBdT9TvA6tEp3ky9HDg&language=en&libraries=places&callback=init"
+        async defer></script>
+  {% endassets %}
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+{% from "macros.html" import meal_card%}
+{% block container %}
+{% set r_len = reserved|length %}
+{% set p_len = pending|length %}
+<div class="ui container">
+  <h1 class="ui header">Your Reservations</h1>
+  {% if r_len == 0 and p_len == 0 %}
+  <div class="ui icon message">
+    <i class="utensils icon"></i>
+    <div class="content">
+      <div class="header">
+        Wait! There is no reservation!
+      </div>
+      <p>Why don't you explore a whole new meal through various hosts?</p>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if r_len != 0 %}
+  <h2>Reserved</h2>
+  <div class="ui cards">
+  {% for meal in reserved %}
+    {{meal_card(meal)}}
+  {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if p_len != 0 %}
+  <h2>Pending</h2>
+  <div class="ui link cards">
+  {% for meal in pending %}
+    {{meal_card(meal)}}
+  {% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

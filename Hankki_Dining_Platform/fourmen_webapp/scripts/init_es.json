@@ -1,0 +1,38 @@
+{
+  "settings":{
+    "index":{
+      "analysis":{
+        "analyzer":{
+          "korean":{
+            "type":"custom",
+            "tokenizer":"mecab_ko_standard_tokenizer"
+          }
+        }
+      }
+    }
+  },
+  "mappings":{
+    "meal":{
+      "properties":{
+        "pin": {
+          "properties": {
+            "location": {
+              "type": "geo_point"
+            }
+          }
+        },
+        "name":{
+          "analyzer": "korean",
+          "type": "string"
+        },
+        "description":{
+          "analyzer": "korean",
+          "type": "string"
+        },
+        "id":{
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

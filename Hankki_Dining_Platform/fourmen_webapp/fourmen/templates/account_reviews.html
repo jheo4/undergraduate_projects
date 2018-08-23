@@ -1,0 +1,133 @@
+{% extends 'layout.html' %}
+{% block container %}
+ <div class="ui container">
+  <div class="ui relaxed grid">
+    {% include 'account_sidebar.html' %}
+    <div class="twelve wide column">
+      <div class="ui tabular menu">
+        <div class="item active" data-tab="about-you">Reviews about you</div>
+        <div class="item" id="by-you" data-tab="by-you">Reviews by you</div>
+      </div>
+      <div class="ui tab active" data-tab="about-you">
+        <div class="ui comments">
+          <h3 class="ui header">From Guests</h3>
+        {% for review in reviews_from_guest %}
+          <div class="comment">
+            <a class="avatar">
+              <img src="{{ review.author.profile_image_url }}">
+            </a>
+            <div class="content">
+              <a class="author" href="{{ url_for('account.view_profile', user_id=review.author.id) }}">Reviews from {{ review.author.name }}</a>
+              <div class="metadata">
+                <span class="date">{{ review.date }}</span>
+                <i class="star icon"></i>{{ review.rating }}
+              </div>
+              <div class="text">
+                {{ review.content }}
+              </div>
+            </div>
+            <div class="extra content">
+              <div class="right text">
+                <a class="" href="{{ url_for('meal.detail_meal', meal_id=review.meal_id) }}">
+                  {{ review.reservation.meal.name }}
+                </a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          <h3 class="ui header">From Hosts</h3>
+          {% for review in reviews_from_host %}
+          <div class="comment">
+            <a class="avatar">
+              <img src="{{ review.author.profile_image_url }}">
+            </a>
+            <div class="content">
+              <a class="author" href="{{ url_for('account.view_profile', user_id=review.author.id) }}">Reviews from {{ review.author.name }}</a>
+              <div class="metadata">
+                <span class="date">{{ review.date }}</span>
+                <i class="star icon"></i>{{ review.rating }}
+              </div>
+              <div class="text">
+                {{ review.content }}
+              </div>
+            </div>
+            <div class="extra content">
+              <div class="right text">
+                <a class="" href="{{ url_for('meal.detail_meal', meal_id=review.meal_id) }}">
+                  {{ review.reservation.meal.name }}
+                </a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="ui tab" data-tab="by-you">
+        <div class="ui comments">
+          <h3 class="ui header">As a Host</h3>
+          {% for review in reviews_to_guest %}
+          <div class="comment" id="as-host-{{ review.id }}">
+            <a class="avatar">
+              <img src="{{ review.author.profile_image_url }}">
+            </a>
+            <div class="content">
+              <a class="author" href="{{ url_for('account.view_profile', user_id=review.author.id) }}">Reviews for {{ review.author.name }}</a>
+              <div class="metadata">
+                <span class="date">{{ review.date }}</span>
+                <i class="star icon"></i>{{ review.rating }}
+              </div>
+              <div class="text">
+                {{ review.content }}
+              </div>
+            </div>
+            <div class="extra content">
+              <div class="right text">
+                <a class="" href="{{ url_for('meal.detail_meal', meal_id=review.meal_id) }}">
+                  {{ review.reservation.meal.name }}
+                </a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          <h3 class="ui header">As a Guest</h3>
+          {% for review in reviews_to_host %}
+          <div id="as-guest-{{ review.id }}"class="comment">
+            <a class="avatar">
+              <img src="{{ review.author.profile_image_url }}">
+            </a>
+            <div class="content">
+              <a class="author" href="{{ url_for('account.view_profile', user_id=review.author.id) }}">Reviews for {{ review.author.name }}</a>
+              <div class="metadata">
+                <span class="date">{{ review.date }}</span>
+                <i class="star icon"></i>{{ review.rating }}
+              </div>
+              <div class="text">
+                {{ review.content }}
+              </div>
+            </div>
+            <div class="extra content">
+              <div class="right text">
+                <a class="" href="{{ url_for('meal.detail_meal', meal_id=review.meal_id) }}">
+                  {{ review.reservation.meal.name }}
+                </a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+
+        </div>
+      </div>
+    </div>
+  <script>
+    $(function() {
+      $('.tabular.menu .item').tab();
+      anchor = window.location.hash;
+      console.log(anchor);
+      if (anchor.match(/as-guest/) || anchor.match(/as-host/)) {
+        $('#by-you').click();
+        $(anchor).css('background-color', 'rgb(255, 255, 200)');
+      }
+    });
+  </script>
+</div>
+{% endblock %}

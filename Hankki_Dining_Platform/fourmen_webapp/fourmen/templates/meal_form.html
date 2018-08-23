@@ -1,0 +1,136 @@
+{% extends 'layout.html' %}
+{% block container %}
+<div class="ui container">
+  <script type="text/javascript">
+  $('body').ready(() => {
+    $('#input_images').on('change', (event) => {
+      multiple_preview(event, 'div.gallery');
+    });
+
+    // image_uuids
+    $('#form').on('submit', () => {
+      images = $('#input_images')[0].files;
+      if(images.length){
+        for(let i = 0; i < images.length; i++){
+          upload_file(images[i], (url, object_uuid) => {
+            $('#form input[name="image_uuids"][index="'+i+'"]').val(object_uuid);
+            var uuids = $.map($('#form input[name="image_uuids"]'), (input)=>{
+              var image_uuid = $(input).val();
+              if(image_uuid != ""){
+                return image_uuid;
+              }
+            });
+            if(uuids.length == images.length){
+              $.post($('#form').attr('action'),
+                $('#form').serialize(), ()=>{
+                document.location="/";});
+            }
+          });
+        }
+      }
+      else{
+        $.post($('#form').attr('action'),
+          $('#form').serialize(), ()=>{
+          document.location="/";});
+      }
+      return false;
+    });
+  });
+  </script>
+
+  <h2>
+    {% if request.endpoint == 'meal.meal_form' %}
+      {% set action_url = url_for('meal.list_meal') %}
+      {% set is_update = False %}
+      Create a Meal
+    {% else %}
+      {% set action_url = url_for('meal.update_meal', meal_id=meal.id) %}
+      {% set is_update = True %}
+      Update your Meal
+    {% endif %}
+  </h2>
+  <div class="ui two column relaxed grid">
+    <div class="column">
+      <form id="form" class="ui form" method="POST" action="{{ action_url }}"
+            enctype="multipart/form-data">
+        <div class="field">
+          <label>Meal Name</label>
+          <input type="text" name="title" value="{{ meal.name if is_update }}" required>
+        </div>
+        <div class="three fields">
+          <div class="field">
+            <label>Hosting Date</label>
+            <input id="meal_date" type="text" name="date" value="{{ meal.datetime.strftime("%Y-%m-%d") if is_update }}" required>
+          </div>
+          <div class="field">
+            <label>Hosting Time</label>
+            <input id="meal_time" type="text" name="time" value="{{ meal.datetime.strftime("%H:%M") if is_update }}" required>
+          </div>
+          <div class="field">
+            <label>Price</label>
+            <input type="text" name="price" value="{{ meal.price if is_update }}">
+          </div>
+        </div>
+        <div class="field">
+          <label>Description<br>
+          <div class="ui info message">
+            <div class="list">
+              <li>Describe what you want</li>
+              <li>ex1) 한식/일식/고기/피자/야채</li>
+              <li>ex2) 집에서 직접 만든 밀크쉐이크</li>
+            </div>
+          </div>
+          <textarea name="description" rows="5" cols="100">{{ meal.description if is_update}}</textarea>
+        </div>
+        <div class="field">
+          <label for="input_images" class="ui icon basic button">
+            <i class="file icon"></i>
+            Open File
+          </label>
+          <input type="file" multiple id="input_images" style="display:none;">
+          <div class="ui small images gallery" style="display: flex; flex-wrap: wrap;"></div>
+        </div>
+
+        <div class="field">
+          <label>Location</label>
+          <div class="two fields">
+            <div class="twelve wide field">
+              <input id="search-input" type="text" placeholder="enter a location">
+              <input type="hidden" name="city" id="locality" value="{{ meal.city if is_update}}">
+              <input type="hidden" name="state" id="administrative_area_level_1" value="{{ meal.state if is_update }}">
+              <input type="hidden" name="country" id="country" value="{{ meal.country if is_update }}">
+              <input type="hidden" name="lat" id="lat" value="{{ meal.lat if is_update }}">
+              <input type="hidden" name="lng" id="lng" value="{{ meal.lng if is_update}}">
+            </div>
+            <div class="four wide field">
+              <button id="search-loc" class="ui blue basic fluid center icon button">
+                Current
+              <i class="compass icon"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <button class="ui basic blue button" type="submit">
+          {% if is_update %}
+            Update your meal
+          {% else %}
+            Register a meal
+          {% endif %}
+        </button>
+      </form>
+    </div>
+    <div class="ui form column">
+      <div class="field">
+        <label>Map</label>
+        <div id="map" style="height: 50vh; width: 100%"></div>
+      </div>
+    </div>
+  </div>
+  <!-- BEGIN MODULE JS -->
+  {% assets "meal_js" %}
+  <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj1i_H5y8QQYOwpBdT9TvA6tEp3ky9HDg&language=en&libraries=places&callback=init"
+            async defer></script>
+  {% endassets %}
+</div>
+{% endblock %}

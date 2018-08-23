@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+{% block container %}
+<div class="ui container">
+  <div class="ui one column relaxed grid">
+    <h1 class="header">Host Documents for Authorization</h1>
+    <div class="column">
+      <div class="column">
+        {% set user= application.user %}
+        <label>Description from user</label>
+        <div class="ui segment">
+          <p>{{ application.description }}</p>
+        </div>
+        <label>Back Account</label>
+        <div class="ui segment">
+          <p>{{ application.bank_name }} {{ application.account_number }}</p>
+        </div>
+        <label>Attachments</label>
+        <div class="carousel">
+          {% for document in application.documents %}
+          <div class="slide-item item{{loop.index}}">
+            <img src="{{document.host_document_url}}" height="250px">
+            </div>
+          {% endfor %}
+        </div>
+        <form class="ui form" action="{{url_for('admin.confirm_applicants', application_id=application.id)}}" method="POST">
+          <div class="field">
+            <div class="ui info message">
+              <div class="list">
+                <li>Write comments on this user</li>
+              </div>
+            </div>
+            <textarea class="field" name="description" rows="5" cols="100"></textarea>
+          </div>
+          <button class="ui basic blue button" type="submit" name="confirm">Confirm</button>
+          <button class="ui basic red button" type="submit" name="deny">Deny</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('.carousel').slick({
+        slidesToscroll: 3,
+        slidesToShow: 3,
+        infinite: true,
+        arrows: true
+      });
+    });
+  </script>
+</div>
+{% endblock %}

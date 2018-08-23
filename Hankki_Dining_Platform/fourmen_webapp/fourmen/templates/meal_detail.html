@@ -1,0 +1,229 @@
+{% extends 'layout.html' %}
+{% block container %}
+  <div class="ui fluid container" style="background: rgb(245, 244, 247);">
+    <div class="ui container">
+      <div class="carousel">
+        {% for photo in meal.photos %}
+          <div class="slide-item item{{ loop.index }}">
+            <img src="{{ photo.meal_photo_url }}" style="max-height: 250px; max-width: 350px">
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="ui hidden divider"></div>
+  <div class="ui container">
+    <div class="ui grid">
+      <div class="twelve wide column">
+        <div class="ui grid">
+          <div class="twelve wide column">
+            <div class="ui header" style="font-size: 3.5em;">{{ meal.name }}</div>
+            <span
+                class="ui header">{{ meal.city }}, {{ meal.state|default('Gyeonggi-do', true) }}, {{ meal.country }}</span>
+          </div>
+          <div class="four wide column">
+            <div class="author center aligned header">
+              <img class="ui image circular tiny" src="{{ meal.host.profile_image_url }}">
+              <a class="ui header"
+                 href="{{ url_for('account.view_profile', user_id=meal.host.id) }}">{{ meal.host.name }}</a>
+            </div>
+          </div>
+        </div>
+        <div class="ui container" style="margin-top: 3rem;">
+          <h3>Description</h3>
+          {{ meal.description }}
+        </div>
+      </div>
+      <div class="four wide column">
+        <div class="ui card" style="width: 100%">
+          <div class="content">
+            <h4 class="ui header">￦ {{ meal.price }} per guest</h4>
+            {% if meal.host_id == session['id'] %}
+              <form action="{{ url_for('meal.update_meal', meal_id=meal.id) }}" method="GET">
+                <button class="ui inverted blue fluid button" tabindex="0">Edit</button>
+              </form>
+              <div class="ui divider"></div>
+              <form action="{{ url_for('meal.delete_meal', meal_id=meal.id) }}" method="POST">
+                <button class="ui inverted red fluid button" tabindex="0">Delete</button>
+              </form>
+            {% elif 'id' in session and meal.host_id != session['id'] %}
+              {% if reservation ==  None %}
+                <form id="reserve_form" action="/meals/{{ meal.id }}/reservations/{{ session['id'] }}" method="post">
+                  <button class="ui green fluid basic button">Reserve</button>
+                </form>
+              {% elif reservation != None and reservation.approval == 0 %}
+                <form action="/meals/{{ meal.id }}/reservations/{{ session['id'] }}/cancel" method="post">
+                  <button class="ui red fluid basic button">Cancel</button>
+                </form>
+              {% elif reservation != None and reservation.approval == 1 %}
+                <button class="ui grey basic fluid button" disabled>Confirmed</button>
+              {% endif %}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% if meal.host_id == session['id'] %}
+      <h2 class="ui header">Reservation confirm</h2>
+      <div class="ui cards">
+        {% for rsv in reservations %}
+          <div class="card">
+            <div class="content">
+              <img class="ui right floated mini image" src="{{ rsv.guest.profile_image_url }}">
+              <div class="header">
+                <a class="ui header black"
+                   href="{{ url_for('account.view_profile', user_id=rsv.guest.id) }}">{{ rsv.guest.name }}</a>
+              </div>
+              <div class="description">
+              </div>
+            </div>
+            <div class="extra content">
+              <div class="ui two buttons">
+                {% set review = rsv.meal_id|check_review(rsv.guest_id, session['id']) %}
+                {% if rsv.approval == 0 %}
+                  <form action="/meals/{{ meal.id }}/reservations/{{ rsv.guest_id }}/approve"
+                        method="post" style="width: 100%">
+                    <button class="ui basic green button fluid">Confirm</button>
+                  </form>
+                {% elif review %}
+                  <a class="ui button basic blue"
+                     href="{{ url_for('account.list_reviews', _anchor='as-host-' + review.id|string) }} ">Read your
+                    review</a>
+                {% else %}
+                  <form class="ui form" action="{{ url_for('review.create_review') }}"
+                        method="GET" style="width: 100%">
+                    <input type="hidden" name="meal_id" value="{{ meal.id }}">
+                    <input type="hidden" name="guest_id" value="{{ rsv.guest_id }}">
+                    <input type="hidden" name="author_type" value="1">
+                    <button class="ui brown button basic fluid">Write a review</button>
+                  </form>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <h2 class="ui header">{{ reviews.count() }} Reviews&ensp;
+      <span>
+    {% set avg_rating = meal.average_rating|int %}
+        {% for _ in range(0, avg_rating) %}
+          <i class="star yellow icon"></i>
+        {% endfor %}
+        {% if avg_rating <= 4 %}
+          {% for _ in range(0, (5-avg_rating)) %}
+            <i class="star outline grey icon"></i>
+          {% endfor %}
+        {% endif %}
+    </span>
+    </h2>
+    <div class="ui feed">
+      {% for review in reviews %}
+        <div class="event">
+          <div class="label">
+            <img src="{{ review.author.profile_image_url }}">
+          </div>
+          <div class="content">
+            <div class="summary">
+              <a class="user" href="{{ url_for('account.view_profile', user_id=review.author.id) }}">{{ review.author.name }}</a>
+              <div class="date">{{ review.date }}</div>
+            </div>
+            <div class="meta">
+              <div class="ui star rating" data-rating="{{ review.rating }}" data-max-rating="5"></div>
+            </div>
+            <div class="extra text">
+              {{ review.content }}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="ui container" style="margin-top: 3rem;">
+      <a class="label" id="message" href="#"><h3>호스트에게 메시지 보내기</h3></a>
+    </div>
+  </div>
+  <div class="ui modal">
+    <i class="close icon"></i>
+    <div class="header label" style="font-size: 20px">
+      <span> <b>{{ meal.host.username }} </b></span>님에게 연락하기
+    </div>
+    <div class="content">
+      <form id="msgForm" class="ui form" action="{{ url_for('message.message_list') }}" method="POST">
+        <div class="ui form">
+          <div class="field">
+            <textarea name="content" style="width:450px; height: 200px; font-size: 20px"></textarea>
+          </div>
+        </div>
+        <input type="hidden" id="receiver_id" name="receiver_id" value="{{ meal.host_id }}">
+        <input type="hidden" id="meal_id" name="meal_id" value="{{ meal.id }}">
+      </form>
+    </div>
+    <div class="actions">
+      <div id="submit" class="ui positive right labeled icon button">
+        Send
+        <i class="checkmark icon"></i>
+      </div>
+    </div>
+  </div>
+  <script src="https://service.iamport.kr/js/iamport.payment-1.1.5.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    $('.rating').rating('disable');
+    $(document).ready(function () {
+      {%- if 'id' in session %}
+      IMP.init('imp14013213');  // 가맹점식별코드
+      $('#reserve_form').on('submit', function () {
+        IMP.request_pay({
+          pg: 'html5_inicis',
+          pay_method: 'card',
+          merchant_uid: 'merchant_' + new Date().getTime(),
+          name: '[한끼줍쇼] {{meal.name}} by {{meal.host.name}}',
+          amount: {{meal.price}},
+          buyer_email: '{{g.current_user.email}}',
+          buyer_name: '{{g.current_user.name}}',
+          buyer_tel: '',
+          buyer_addr: '',
+          buyer_postcode: '',
+        }, function (rsp) {
+          if (rsp.success) {
+            var msg = '결제가 완료되었습니다.';
+            msg += '고유ID : ' + rsp.imp_uid;
+            msg += '상점 거래ID : ' + rsp.merchant_uid;
+            msg += '결제 금액 : ' + rsp.paid_amount;
+            msg += '카드 승인번호 : ' + rsp.apply_num;
+            $.post($('#reserve_form').attr('action'), {"payment_id": rsp.imp_uid}, function () {
+              location.reload();
+            });
+          } else {
+            var msg = '결제에 실패하였습니다.';
+            msg += '에러내용 : ' + rsp.error_msg;
+            alert(msg);
+          }
+        });
+        return false;
+      });
+      {% endif -%}
+      $('.carousel').slick({
+        slidesToscroll: 3,
+        slidesToShow: 3,
+        infinite: true,
+        arrows: true,
+        adaptiveHeight: true
+      });
+      $('#message').on('click', function () {
+        $('.ui.modal').modal('show');
+      });
+      $('#submit').on('click', function () {
+        $.ajax({
+          url: '/messages/',
+          type: 'POST',
+          data: $('#msgForm').serialize(),
+          dataType: 'text',
+          error: function () {
+            console.log('ajax error', error)
+          }
+        })
+      });
+    });
+  </script>
+  </div>
+{% endblock %}

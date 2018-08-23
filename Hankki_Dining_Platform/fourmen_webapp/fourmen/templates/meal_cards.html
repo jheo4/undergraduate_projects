@@ -1,0 +1,11 @@
+{% from "macros.html" import meal_card %}
+<h2 style="margin: 10px">Search Results</h2>
+{% if meals %}
+  <div class="ui cards">
+    {% for meal in meals %}
+      {{meal_card(meal)}}
+    {% endfor %}
+  <div>
+{% else %}
+  Your search did not match any meals.
+{% endif %}

@@ -1,0 +1,73 @@
+{% extends 'layout.html' %}
+{% block container %}
+  <div class="ui container">
+    <div class="ui link items">
+      <hr>
+      <div class="comment" style="text-align: right; margin-top: 2rem">
+        <div class="content">
+          <div class="metadata" style="margin-top: 1rem">
+          </div>
+          <form id="message_form" class="ui form right pointing basic large label" action="/messages/"
+                style="height: 250px; width: 600px; margin-right: 4em">
+            <div class="field">
+              <textarea id="msg_content" name="content" style="height: 150px;"></textarea>
+              <div style="background-color: #edefed; height: 80px">
+                <div id="send_button" class="ui secondary basic button" style="margin: 20px 20px 20px 20px">메시지 보내기
+                </div>
+              </div>
+            </div>
+            <input type="hidden" name="meal_id" value="{{ message[0].meal_id }}">
+            <input type="hidden" name="receiver_id" value="{{ counter_id }}">
+          </form>
+          <span><img class="ui avatar image tiny" src="{{ g.current_user.profile_image_url }}"
+                     style="margin: 0px 0px 110px 0px"></span>
+        </div>
+      </div>
+      {% for msg in message %}
+        {% if session['id'] == msg.sender_id %}
+          <div class="comment" style="text-align: right; margin-top: 2rem">
+            <div class="content">
+              <div class="metadata" style="margin-top: 1rem">
+              </div>
+              <div class="ui right pointing basic large label" style="height: 100px; width: 400px; margin-right: 3em; background-color: #edefed;">
+                <p>{{ msg.content }}</p>
+              </div>
+              <span><img class="ui avatar image tiny" src="{{ g.current_user.profile_image_url }}"
+                         style="margin: 40px 0px 0px 0px"></span>
+            </div>
+          </div>
+        {% else %}
+          <div class="comment" style="margin-top: 1rem">
+            <div class="content">
+              <div class="metadata" style="margin-top: 1rem">
+              </div>
+              <span><img class="ui avatar image tiny" src="{{ msg.sender.profile_image_url }}"
+                         style="margin: 40px 0px 0px 50px"></span>
+              <div class="ui left pointing basic large label" style="height: 100px; width: 400px; margin-left: 3em">
+                <p>{{ msg.content }} </p>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  <script>
+    $(document).ready(function () {
+      $('#send_button').on('click', function () {
+        $.ajax({
+          url: '/messages/',
+          type: 'POST',
+          data: $('#message_form').serialize(),
+          dataType: 'text',
+          success: function () {
+            location.reload();
+          },
+          error: function () {
+            console.log('ajax error', error)
+          }
+        })
+      });
+    });
+  </script>
+{% endblock %}

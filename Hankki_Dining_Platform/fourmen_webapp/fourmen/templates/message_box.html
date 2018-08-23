@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+{% block container %}
+  <div class="ui container" style="margin-top: 100px">
+    <h1 class="ui header">Message</h1>
+    <div class="ui icon message">
+      <i class="inbox icon"></i>
+      <div class="content">
+        <div class="header">
+          Don't hesitate to ask what you want and be connected to them!
+        </div>
+        <p>A lot of people who want to be connected or hear your voice are out there.<br>
+        Let them know what you want and make another connection.</p>
+      </div>
+    </div>
+    <table class="ui celled striped table">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Meal</th>
+        <th>Message</th>
+      </tr>
+      </thead>
+      {% set counter_id= 0 %}
+      {% for msg in message %}
+        <tr>
+          <td width="30">
+            <h4 class="ui images header">
+              {% if msg.sender_id == session['id'] %}
+                <img class="ui mini rounded image" src="{{ msg.receiver.profile_image_url }}">&nbsp;{{ msg.receiver.name }}
+              {% elif msg.receiver_id == session['id'] %}
+                <img class="ui mini rounded image" src="{{ msg.sender.profile_image_url }}">{{ msg.sender.name }}
+                </h4>
+              {% endif %}
+          </td>
+          <td width="60"> {{ msg.meal.name }} , {{ msg.meal.date }} {{ msg.meal.time }}</td>
+          {% if msg.sender_id == session['id'] %}
+            <td width="50"><a
+                href="{{ url_for('message.message_room', meal_id = msg.meal_id, counter_id = msg.receiver_id) }}">{{ msg.content }}</a>
+            </td>
+          {% else %}
+            <td width="50"><a
+                href="{{ url_for('message.message_room', meal_id = msg.meal_id, counter_id = msg.sender_id) }}">{{ msg.content }}</a>
+            </td>
+          {% endif %}
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  </table>
+{% endblock %}

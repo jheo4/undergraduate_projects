@@ -1,0 +1,51 @@
+{% macro meal_card(meal) -%}
+	<div class="ui card">
+      <a class="image" href="{{ url_for('meal.detail_meal', meal_id=meal.id) }}">
+        <img src="{{meal.photos[0].meal_photo_url}}">
+      </a>
+      <div class="content">
+        <div class="extra content center aligned">
+          <h3 class="center aligned header">{{ meal.name }}</h3>
+            <div class="ui star rating" data-rating="{{meal.average_rating|int}}" data-max-rating="5"></div>
+            <script type="text/javascript">
+              $('.ui.rating').rating();
+              $('.ui.rating').rating('disable');
+            </script>
+          <div class="author">
+            <a href="{{url_for('account.view_profile', user_id=meal.host.id)}}">
+              <img class="ui tiny circular image" src="{{ meal.host.profile_image_url }}">
+            </a>
+          </div>
+          <div class="author aligned header">{{ meal.host.name }}</div>
+          {% if 'id' in session %}
+            {% set review = meal.id|check_review(session['id'], session['id']) %}
+            {% set rsv = meal.id|check_reservation(session['id']) %}
+            {% if review %}
+              <a href="{{ url_for('account.list_reviews', _anchor='as-guest-' + review.id|string ) }} ">Read your review</a>
+            {% elif rsv.approval %}
+              <form action="{{ url_for('review.create_review') }}", method="GET">
+                <input type="hidden" name="meal_id" value="{{ meal.id }}">
+                <input type="hidden" name="guest_id" value="{{ session['id'] }}">
+                <input type="hidden" name="author_type" value="0">
+                <button class="ui button brown basic">Write Your Review</button>
+              </form>
+            {% endif %}
+          {% endif %}
+        </div>
+        <div class="description">
+          {{ meal.description }}
+        </div>
+      </div>
+      <div class="extra content">
+        <span class="right floated">
+          {{ meal.datetime }}
+        </span>
+        <span>
+          <i class="user icon"></i>
+          {{ meal.reservations.count() }} gathered
+        </span>
+      </div>
+      
+    </div>
+    
+{%- endmacro %}

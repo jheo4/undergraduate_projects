@@ -1,0 +1,6 @@
+<div class="ui secondary vertical menu three wide column">
+  <a class="item" href="{{ url_for('account.view_profile', user_id=session['id']) }}">View Profile</a>
+  <a class="item" href="{{ url_for('account.modification') }}">Edit Profile</a>
+  <a class="item" href="{{ url_for('account.list_reviews') }}">Reviews</a>
+  <a class="item" href="{{ url_for('account.signout') }}">Sign out</a>
+</div>

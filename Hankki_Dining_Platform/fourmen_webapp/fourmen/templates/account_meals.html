@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+{% from "macros.html" import meal_card%}
+{% block container %}
+{% set u_len = upcomings|length %}
+{% set e_len = expireds|length %}
+<div class="ui container">
+  <h1 class="ui header">Your Listings</h1>
+  {% if u_len == 0 and e_len ==0 %}
+  <div class="ui icon message">
+    <i class="child icon"></i>
+    <div class="content">
+      <div class="header">
+        Hey! There is no meal to show to everyone!
+      </div>
+      <p>Let us introduce your awesome meals!</p>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if u_len != 0 %}
+  <h2>Upcoming</h2>
+    <div class="ui cards">
+    {% for meal in upcomings %}
+      {{meal_card(meal)}}
+    {% endfor %}
+    </div>
+  {% endif %}
+  {% if e_len != 0 %}
+  <h2>Expired</h2>
+    <div class="ui cards">
+    {% for meal in expireds %}
+      {{meal_card(meal)}}
+    {% endfor %}
+    </div>
+  {% endif %}
+  <script type="text/javascript">
+  </script>
+</div>
+{% endblock %}

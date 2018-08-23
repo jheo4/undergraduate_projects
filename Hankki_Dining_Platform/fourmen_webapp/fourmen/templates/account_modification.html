@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+{% block container %}
+<div class="ui container">
+  <div class="ui relaxed grid">
+    {% include 'account_sidebar.html' %}
+    <div class="twelve wide column">
+      <form id="form" class="ui form" method="POST" enctype="multipart/form-data">
+        <div class="field">
+          <label>Enter your current password</label>
+          <input name="password" type="password" required/>
+        </div>
+        <div class="field">
+          <label>Enter new password</label>
+          <input name="new_password" type="password"/>
+        </div>
+        <div class="field">
+          <label>Edit your name</label>
+          <input name="name" type="text" pattern=".{1,50}" value="{{user.name}}"/>
+        </div>
+        <div class="field">
+          <label>Edit your email address</label>
+          <input name="email" type="text" value="{{user.email}}"/>
+        </div>
+        <div class="field">
+          <label>Profile picture</label>
+          <img id="preview" src="{{ user.profile_image_url }}" height="200" width="200"/><br>
+          <input type="hidden" name="profile_uuid">
+          <input type="file" name="file" id="file" accept="image/*"/><br>
+        </div>
+        <div class="field">
+          <label>Leave fields blank if you don't want to change them!</label>
+        </div>
+        <input class="ui button primary" type="submit" value="Apply"/>
+      </form>
+      <hr>
+      <form action="{{ url_for('account.unregister') }}" method="POST">
+        <input class="ui button negative" type="submit" value="Unregister"/>
+      </form>
+    </div>
+  </div>
+  <script type="text/javascript">
+    $('body').ready(() => {
+      $('#file').on('change', (event) => {
+        preview(event);
+      });
+      $('#form').on('submit', () => {
+        file = $('#file')[0].files[0];
+        if(file){
+          upload_file(file, (url, object_uuid) => {
+            $('#form input[name="profile_uuid"]').val(object_uuid);
+            $.post("{{url_for('account.modification')}}",
+              $('#form').serialize(), ()=>{
+              document.location="/";});
+          });
+        }
+        else{
+          $.post("{{url_for('account.modification')}}",
+            $('#form').serialize(), ()=>{
+            document.location="/";});
+        }
+        return false;
+      });
+    });
+  </script>
+</div>
+{% endblock %}
