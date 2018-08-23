@@ -15,10 +15,10 @@ This model is the 10 layer ResNet. However, the performance is lower than Vgg-10
 1. Input augmentation
   - If the input space is too small, the overfitting problem easily occur. Therefore, input augmentation is used for complex models.
   - In this project, the augmentation is implemented by affine transforms(rotation, translation, scaling, shearing)
-1. The number of network parameters
+2. The number of network parameters
   - Each convolution layer increases the number of parameters by (NxNxInputDim+1)xOutputDim.
   - The more parameters are in the network, the larger amount of time for training is required.
-1. Optimizer
+3. Optimizer
   - There are many kinds of optimizer models such as Adam, SGD and Adadelta.
   - Given each problem to solve, the performance by an optimizer is different.
 

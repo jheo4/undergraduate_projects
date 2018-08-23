@@ -1,0 +1,162 @@
+WARNING:tensorflow:From <ipython-input-1-e1b9e694c425>:43: read_data_sets (from tensorflow.contrib.learn.python.learn.datasets.mnist) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use alternatives such as official/mnist/dataset.py from tensorflow/models.
+WARNING:tensorflow:From /usr/local/lib/python3.6/dist-packages/tensorflow/contrib/learn/python/learn/datasets/mnist.py:260: maybe_download (from tensorflow.contrib.learn.python.learn.datasets.base) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please write your own downloading logic.
+WARNING:tensorflow:From /usr/local/lib/python3.6/dist-packages/tensorflow/contrib/learn/python/learn/datasets/base.py:252: _internal_retry.<locals>.wrap.<locals>.wrapped_fn (from tensorflow.contrib.learn.python.learn.datasets.base) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use urllib or similar directly.
+Successfully downloaded train-images-idx3-ubyte.gz 9912422 bytes.
+WARNING:tensorflow:From /usr/local/lib/python3.6/dist-packages/tensorflow/contrib/learn/python/learn/datasets/mnist.py:262: extract_images (from tensorflow.contrib.learn.python.learn.datasets.mnist) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use tf.data to implement this functionality.
+Extracting MNIST_data/train-images-idx3-ubyte.gz
+Successfully downloaded train-labels-idx1-ubyte.gz 28881 bytes.
+WARNING:tensorflow:From /usr/local/lib/python3.6/dist-packages/tensorflow/contrib/learn/python/learn/datasets/mnist.py:267: extract_labels (from tensorflow.contrib.learn.python.learn.datasets.mnist) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use tf.data to implement this functionality.
+Extracting MNIST_data/train-labels-idx1-ubyte.gz
+WARNING:tensorflow:From /usr/local/lib/python3.6/dist-packages/tensorflow/contrib/learn/python/learn/datasets/mnist.py:110: dense_to_one_hot (from tensorflow.contrib.learn.python.learn.datasets.mnist) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use tf.one_hot on tensors.
+Successfully downloaded t10k-images-idx3-ubyte.gz 1648877 bytes.
+Extracting MNIST_data/t10k-images-idx3-ubyte.gz
+Successfully downloaded t10k-labels-idx1-ubyte.gz 4542 bytes.
+Extracting MNIST_data/t10k-labels-idx1-ubyte.gz
+WARNING:tensorflow:From /usr/local/lib/python3.6/dist-packages/tensorflow/contrib/learn/python/learn/datasets/mnist.py:290: DataSet.__init__ (from tensorflow.contrib.learn.python.learn.datasets.mnist) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use alternatives such as official/mnist/dataset.py from tensorflow/models.
+WARNING:tensorflow:From <ipython-input-1-e1b9e694c425>:92: softmax_cross_entropy_with_logits (from tensorflow.python.ops.nn_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+
+Future major versions of TensorFlow will allow gradients to flow
+into the labels input on backprop by default.
+
+See @{tf.nn.softmax_cross_entropy_with_logits_v2}.
+
+# of training dataset :  10000
+# of valiation dataset :  50000
+# of testing dataset :  10000
+Input Augmentation End
+1 Epoch Accuracy : 0.086
+2 Epoch Accuracy : 0.121
+3 Epoch Accuracy : 0.245
+4 Epoch Accuracy : 0.323
+5 Epoch Accuracy : 0.784
+5 Epoch Cost : 1.99931109
+6 Epoch Accuracy : 0.926
+7 Epoch Accuracy : 0.966
+8 Epoch Accuracy : 0.975
+9 Epoch Accuracy : 0.981
+10 Epoch Accuracy : 0.981
+10 Epoch Cost : 0.08799554
+11 Epoch Accuracy : 0.985
+12 Epoch Accuracy : 0.984
+13 Epoch Accuracy : 0.987
+14 Epoch Accuracy : 0.984
+15 Epoch Accuracy : 0.984
+15 Epoch Cost : 0.03004443
+16 Epoch Accuracy : 0.981
+17 Epoch Accuracy : 0.982
+18 Epoch Accuracy : 0.984
+19 Epoch Accuracy : 0.988
+20 Epoch Accuracy : 0.986
+20 Epoch Cost : 0.01621434
+21 Epoch Accuracy : 0.986
+22 Epoch Accuracy : 0.988
+23 Epoch Accuracy : 0.988
+24 Epoch Accuracy : 0.985
+25 Epoch Accuracy : 0.989
+25 Epoch Cost : 0.00757306
+26 Epoch Accuracy : 0.988
+27 Epoch Accuracy : 0.987
+28 Epoch Accuracy : 0.988
+29 Epoch Accuracy : 0.990
+30 Epoch Accuracy : 0.990
+30 Epoch Cost : 0.00515210
+31 Epoch Accuracy : 0.988
+32 Epoch Accuracy : 0.989
+33 Epoch Accuracy : 0.989
+34 Epoch Accuracy : 0.988
+35 Epoch Accuracy : 0.989
+35 Epoch Cost : 0.00326747
+36 Epoch Accuracy : 0.987
+37 Epoch Accuracy : 0.988
+38 Epoch Accuracy : 0.988
+39 Epoch Accuracy : 0.987
+40 Epoch Accuracy : 0.988
+40 Epoch Cost : 0.00446307
+41 Epoch Accuracy : 0.988
+42 Epoch Accuracy : 0.988
+43 Epoch Accuracy : 0.987
+44 Epoch Accuracy : 0.990
+45 Epoch Accuracy : 0.991
+45 Epoch Cost : 0.00306907
+46 Epoch Accuracy : 0.990
+47 Epoch Accuracy : 0.986
+48 Epoch Accuracy : 0.990
+49 Epoch Accuracy : 0.989
+50 Epoch Accuracy : 0.990
+50 Epoch Cost : 0.00162085
+51 Epoch Accuracy : 0.988
+52 Epoch Accuracy : 0.986
+53 Epoch Accuracy : 0.990
+54 Epoch Accuracy : 0.989
+55 Epoch Accuracy : 0.990
+55 Epoch Cost : 0.00268114
+56 Epoch Accuracy : 0.988
+57 Epoch Accuracy : 0.988
+58 Epoch Accuracy : 0.988
+59 Epoch Accuracy : 0.989
+60 Epoch Accuracy : 0.991
+60 Epoch Cost : 0.00261860
+61 Epoch Accuracy : 0.991
+62 Epoch Accuracy : 0.990
+63 Epoch Accuracy : 0.990
+64 Epoch Accuracy : 0.989
+65 Epoch Accuracy : 0.990
+65 Epoch Cost : 0.00152651
+66 Epoch Accuracy : 0.991
+67 Epoch Accuracy : 0.990
+68 Epoch Accuracy : 0.991
+69 Epoch Accuracy : 0.990
+70 Epoch Accuracy : 0.990
+70 Epoch Cost : 0.00160156
+71 Epoch Accuracy : 0.988
+72 Epoch Accuracy : 0.989
+73 Epoch Accuracy : 0.988
+74 Epoch Accuracy : 0.989
+75 Epoch Accuracy : 0.988
+75 Epoch Cost : 0.00118719
+76 Epoch Accuracy : 0.988
+77 Epoch Accuracy : 0.989
+78 Epoch Accuracy : 0.989
+79 Epoch Accuracy : 0.988
+80 Epoch Accuracy : 0.989
+80 Epoch Cost : 0.00171344
+81 Epoch Accuracy : 0.989
+82 Epoch Accuracy : 0.990
+83 Epoch Accuracy : 0.990
+84 Epoch Accuracy : 0.988
+85 Epoch Accuracy : 0.990
+85 Epoch Cost : 0.00180745
+86 Epoch Accuracy : 0.988
+87 Epoch Accuracy : 0.990
+88 Epoch Accuracy : 0.991
+89 Epoch Accuracy : 0.990
+90 Epoch Accuracy : 0.990
+90 Epoch Cost : 0.00098824
+91 Epoch Accuracy : 0.991
+92 Epoch Accuracy : 0.990
+93 Epoch Accuracy : 0.989
+94 Epoch Accuracy : 0.991
+95 Epoch Accuracy : 0.990
+95 Epoch Cost : 0.00231499
+96 Epoch Accuracy : 0.990
+97 Epoch Accuracy : 0.989
+98 Epoch Accuracy : 0.991
+99 Epoch Accuracy : 0.991
+100 Epoch Accuracy : 0.990
+100 Epoch Cost : 0.00148812
+Best Trial(epoch :  90  accuracy 0.991

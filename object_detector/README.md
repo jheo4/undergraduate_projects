@@ -17,9 +17,13 @@ Precision and recall are calculated by comparison between groudn truths and outp
 
 ## How to use this program?
 ![fig1](./objectdetector.jpg)
+
 virtualenv securityCam/venv --python=python3
+
 . ./venv/bin/activate
+
 pip install -r requirement.txt
+
 python AutoTest.py
 
 If you have anyquestion, email me "993jin@gmail.com"
