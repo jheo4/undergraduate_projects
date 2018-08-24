@@ -1,8 +1,3 @@
----
-layout: default
----
-[back](./docker2){: .btn.btn-default}
-
 # Docker Basic3
 
 [Docker Official Website](https://www.docker.com/){: target="_blank"}
@@ -10,7 +5,7 @@ layout: default
 ## How To Use Docker?
 Until Basic2 I just introduce the basic concepts and the basic commands of Docker. However, it is necessary to know how to use Docker in the real environment. 
 
-![Docker Usage](dockerUsing.png)
+![Docker Usage](./dockerUsing.png)
 
 There are some steps to use Docker for a basic application. 
 1. Make a directory, DIR1
@@ -50,7 +45,7 @@ To use Docker Compose, some steps are required.
 2. write SUPERDIR/DIR1/Source_Codes
 2. write SUPERDIR/DIR1/Dockerfile
 2. write SUPERDIR/docker-compose.yml
-```    
+```
 version : COMPOSE_VER
 services : 
     SERVICE_NAME_1 :
@@ -92,3 +87,5 @@ docker-compose up -d
 [Dockerfile Reference](https://docs.docker.com/engine/reference/builder/){: target="_blank"}
 
 [Docker Compose Reference](https://docs.docker.com/compose/compose-file/){: target="_blank"}
+
+[back](./docker2)

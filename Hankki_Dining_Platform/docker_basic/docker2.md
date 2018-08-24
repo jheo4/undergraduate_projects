@@ -1,8 +1,3 @@
----
-layout: default
----
-[back](./docker1){: .btn.btn-default} [Basic3](./docker3){: .btn.btn-default}
-
 # Docker Basic2
 
 [Docker Official Website](https://www.docker.com/){: target="_blank"}
@@ -47,3 +42,7 @@ More than the "run" option, there are other options. the frequently used options
 	docker pull [OPTIONS] [NAME] : pull an image or a repository from a registry
 	docker logs [OPTIONS] : print logs
 	docker exec [OPTIONS] Container [COMMAND] : make an exec order to the existing Container
+
+
+[back](./docker1) [Basic3](./docker3)
+

@@ -1,8 +1,4 @@
-# Team 4men Github
-
-## Project name : 한끼줍쇼
-
-This repository is for 2018 capstone design project
+# Hankki : The Dining Hosting Platform
 
 ## Deployment
 ### Installation
@@ -28,3 +24,6 @@ $ docker-compose down
 
 ### GUI Tool for Docker
 * [Kitematic](https://kitematic.com/)
+
+## Demo Video
+[![Hankki](http://img.youtube.com/vi/rt5MzIzjllU/0.jpg)](https://youtu.be/rt5MzIzjllU)

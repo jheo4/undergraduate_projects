@@ -4,6 +4,8 @@ In this research, StarCraft 2 AI API is used to make AI like a human player.
 
 ## Table of Contents
 1. Previous Research Analysis
+	- [Reinforcement Learning](./Prev/reinforcementLearningbasic.md)
+	- [Q-Learning](./Prev/qLearning.md)
 	- [Zero-Player Game](./Prev/zero.md)
 	- [A Survey of Real-Time Strategy Game AI Research and Competition in StarCraft](./Prev/surv.md)
 	- [StarCraft II: A New Challenge for Reinforcement Learning](./Prev/sc2.md)
@@ -26,6 +28,6 @@ In this research, StarCraft 2 AI API is used to make AI like a human player.
 	- Reinforcement Learning AI
 	  - pending
 
-## A Demo Video
+## Demo Video
 [![sc2_ai](http://img.youtube.com/vi/UTt6BTcYGBg/0.jpg)](https://youtu.be/UTt6BTcYGBg) 
 

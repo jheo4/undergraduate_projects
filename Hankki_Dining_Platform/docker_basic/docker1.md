@@ -1,8 +1,3 @@
----
-layout: default
----
-[back](../csmain){: .btn.btn-default} [Basic2](./docker2){: .btn.btn-default}
-
 # Docker Basic1
 
 [Docker Official Website](https://www.docker.com/){: target="_blank"}
@@ -25,3 +20,5 @@ VM is between infrastructure and OS by the hypervisor. Therefore, it requires mo
 
 ## Team Work Environment
 At the very first step of a team project, it is reasonable to set up Docker. After that process, all team members can work irrespective of their infrastructure. With Docker, using git and github is recommendable for the code-level flexibility.
+
+[Basic2](./docker2)

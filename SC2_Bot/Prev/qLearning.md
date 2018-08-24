@@ -1,14 +1,3 @@
----
-layout: default
----
-[back](../csmain){: .btn.btn-default}
-
-# Q-Learning
-
-I refer these pages;
-- [Q-Learning Wiki](https://en.wikipedia.org/wiki/Q-learning){: target="_blank"}
-- [Markov Decision Process](https://en.wikipedia.org/wiki/Markov_decision_process){: target="_blank"}
-
 ## What Q-Learning Is
 
 In [Reinforcement Learning](./reinforcementLearningbasic), Q-Learning is used to find the optimal action-value function as a value iteration method. Therefore, Q-Learning is a learning algorithm to find the optimal policy since the optimal action-value function is for finding the optimal policy. To understand the value iteration, the understanding of MDP(Markov Decision Process) is essential. 

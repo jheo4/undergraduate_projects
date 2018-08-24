@@ -1,9 +1,3 @@
----
-layout: default
----
-[back](../csmain){: .btn.btn-default}
-[Q-Learning](../qLearning){: .btn.btn-default}
-
 # Reinforcement Learning Basic
 
 I refer these pages;
