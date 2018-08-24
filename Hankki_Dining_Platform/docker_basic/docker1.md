@@ -1,6 +1,6 @@
 # Docker Basic1
 
-[Docker Official Website](https://www.docker.com/){: target="_blank"}
+[Docker Official Website](https://www.docker.com/)
 
 ## Motivation
 After research fellowship in UC, Irvine, I realize that the team work is not easy. These days, there are bunch of tools for making team wrok easier. Among them, Docker is a quite nice tool. So, I introduce Docker and the basic way to set up the environment for team work.
@@ -21,4 +21,4 @@ VM is between infrastructure and OS by the hypervisor. Therefore, it requires mo
 ## Team Work Environment
 At the very first step of a team project, it is reasonable to set up Docker. After that process, all team members can work irrespective of their infrastructure. With Docker, using git and github is recommendable for the code-level flexibility.
 
-[Basic2](./docker2)
+[Basic2](./docker2.md)

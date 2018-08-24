@@ -5,6 +5,8 @@
 * [Docker](https://www.docker.com/community-edition)
 * [Docker Compose](https://docs.docker.com/compose/)
 
+If you have no idea of Docker, refer [my explanation](./docker_basic/docker1.md)
+
 ### Build
 ``` shell
 $ docker-compose build

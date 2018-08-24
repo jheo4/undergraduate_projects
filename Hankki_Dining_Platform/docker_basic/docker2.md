@@ -1,6 +1,6 @@
 # Docker Basic2
 
-[Docker Official Website](https://www.docker.com/){: target="_blank"}
+[Docker Official Website](https://www.docker.com/)
 
 ## Basic Commands For Docker
 Docker is for Linux. When someone downloads Docker for Mac or Windows, it work like a virtual machine. After starting Dockr, we can use docker commands.
@@ -44,5 +44,5 @@ More than the "run" option, there are other options. the frequently used options
 	docker exec [OPTIONS] Container [COMMAND] : make an exec order to the existing Container
 
 
-[back](./docker1) [Basic3](./docker3)
+[back](./docker1.md) [Basic3](./docker3.md)
 
